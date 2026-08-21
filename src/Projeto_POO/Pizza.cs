@@ -29,13 +29,19 @@ namespace XulambsFoods {
         }
 
         public Pizza(int adicionais) {
+            descricao = "Pizza";
+            _maxIngredientes = 8;
+            _precoBase = 29d;
+            _quantIngredientes = 0;
+            _valorPorAdicional = 5d;
+            AdicionarIngredientes(adicionais);
         
         }
         #endregion
 
         #region métodos privados
         private double ValorAdicionais() {
-                
+            return _quantIngredientes * _valorPorAdicional;                
         }
 
         private void ModificarDescricao() {
@@ -43,7 +49,7 @@ namespace XulambsFoods {
         }
 
         private bool PodeAdicionar(int quantos) {
-                
+            return _quantIngredientes + quantos <= _maxIngredientes;                
         }
         #endregion
 
@@ -61,7 +67,7 @@ namespace XulambsFoods {
         }
 
         public string GerarCupom() {
-                
+                return ${_descricao - R$ {CalcularValorFinal}}
         }
         #endregion
 
