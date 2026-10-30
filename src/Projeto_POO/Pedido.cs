@@ -6,10 +6,14 @@ namespace XulambsFoods {
         private int _idPedido;
         private DateOnly _data;
         protected LinkedList<Pizza> _pizzas;
+        protected LinkedList<Bebida> _bebidas;
+        protected LinkedList<Sobremesa> _sobremesas;
         private bool _aberto;
 
         public Pedido() {
             _pizzas = new LinkedList<Pizza>();
+            _bebidas= new LinkedList<Bebida>();
+            _sobremesas = new LinkedList<Sobremesa>();
             _aberto = true;
             _data =  DateOnly.FromDateTime(DateTime.Now);
             s_ultimoPedido++;
@@ -29,6 +33,24 @@ namespace XulambsFoods {
             _pizzas.AddLast(pizza);
             return _pizzas.Count;
         }
+        public int Adicionar(Bebida bebida)
+        {
+            if (bebida == null)
+                throw new ArgumentNullException("Bebida não foi criada");
+
+            PodeAdicionar();
+            _bebidas.AddLast(bebida);
+            return _bebidas.Count;
+        }
+        public int Adicionar(Sobremesa sobremesa)
+        {
+            if (sobremesa == null)
+                throw new ArgumentNullException("Sobremesa não foi criada");
+
+            PodeAdicionar();
+            _sobremesas.AddLast(sobremesa);
+            return _sobremesas.Count;
+        }
 
         public void FecharPedido() {
             _aberto = false;
@@ -40,6 +62,12 @@ namespace XulambsFoods {
             double preco = 0d;
             foreach (Pizza pizza in _pizzas) {
                 preco += pizza.CalcularValorFinal();
+            }
+            foreach (Bebida bebida in _bebidas) {
+                preco += bebida.CalcularValorFinal();
+            }
+            foreach (Sobremesa sobremesa in _sobremesas) {
+                preco += sobremesa.CalcularValorFinal();
             }
             return preco;
         }
